@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Chat - Moderne Chat Plattform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1f2937;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --gray-light: #e2e8f0;
+            --gray-dark: #475569;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1600px;
+            height: 95vh;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 32px 64px rgba(0,0,0,0.25);
+            display: flex;
+        }
+        
+        /* Login Screen */
+        .login-screen {
+            width: 100%;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--light) 0%, white 100%);
+            text-align: center;
+        }
+        
+        .login-header {
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+        
+        .tagline {
+            color: var(--gray-dark);
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .subtagline {
+            color: var(--gray);
+            font-size: 14px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .login-form {
+            width: 100%;
+            max-width: 480px;
+            margin-top: 40px;
+        }
+        
+        .input-group {
+            margin-bottom: 24px;
+            text-align: left;
+        }
+        
+        .input-label {
+            display: block;
+            color: var(--dark);
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .input-field {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--dark);
+            background: white;
+            transition: all 0.3s;
+        }
+        
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+        
+        .input-field::placeholder {
+            color: var(--gray);
+        }
+        
+        .btn {
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+        }
+        
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+            border: 2px solid var(--gray-light);
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+        
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 14px;
+            width: auto;
+        }
+        
+        .login-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 32px;
+        }
+        
+        .option-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            border: 2px solid var(--gray-light);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-align: left;
+        }
+        
+        .option-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+        }
+        
+        .option-card.active {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, #f8fafc 0%, white 100%);
+        }
+        
+        .option-icon {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+        
+        .option-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 12px;
+        }
+        
+        .option-desc {
+            color: var(--gray-dark);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        /* Chat Interface */
+        .chat-interface {
+            display: none;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Header */
+        .header {
+            background: white;
+            padding: 0 32px;
+            height: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--gray-light);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .current-room-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .room-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .room-code-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 4px;
+        }
+        
+        .room-code {
+            background: var(--light);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-family: 'Menlo', 'Monaco', monospace;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--primary-dark);
+            letter-spacing: 1px;
+        }
+        
+        .copy-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
+            background: var(--primary-dark);
+            transform: scale(1.1);
+        }
+        
+        .copy-btn.copied {
+            background: var(--success);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .user-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .user-status {
+            font-size: 12px;
+            color: var(--success);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: flex;
+            height: calc(100% - 80px);
+        }
+        
+        /* Left Sidebar */
+        .sidebar {
+            width: 320px;
+            background: var(--light);
+            border-right: 1px solid var(--gray-light);
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 32px;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .room-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .room-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .room-item:hover {
+            border-color: var(--gray-light);
+            transform: translateX(4px);
+        }
+        
+        .room-item.active {
+            border-color: var(--primary);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(99, 102, 241, 0.02) 100%);
+        }
+        
+        .room-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+        
+        .room-details {
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .room-details h4 {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 4px;
+            font-size: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .room-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--gray);
+        }
+        
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: auto;
+        }
+        
+        /* Chat Area */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 32px;
+            background: white;
+        }
+        
+        .chat-empty {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+            color: var(--gray);
+        }
+        
+        .chat-empty h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 16px;
+        }
+        
+        .chat-empty p {
+            max-width: 400px;
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+        
+        .chat-empty-icon {
+            font-size: 80px;
+            margin-bottom: 24px;
+            opacity: 0.5;
+        }
+        
+        .messages-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 16px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .message {
+            margin-bottom: 20px;
+            max-width: 70%;
+            animation: messageAppear 0.3s ease-out;
+        }
+        
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .message.own {
+            margin-left: auto;
+        }
+        
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .message-user {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 14px;
+        }
+        
+        .message-time {
+            font-size: 12px;
+            color: var(--gray);
+        }
+        
+        .message-content {
+            background: white;
+            padding: 14px 18px;
+            border-radius: 18px;
+            border-bottom-left-radius: 5px;
+            line-height: 1.5;
+            font-size: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            word-break: break-word;
+        }
+        
+        .message.own .message-content {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            border-bottom-left-radius: 18px;
+            border-bottom-right-radius: 5px;
+        }
+        
+        /* Input Area */
+        .input-area {
+            display: none;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            border: 2px solid var(--gray-light);
+        }
+        
+        .input-area input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid var(--gray-light);
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--dark);
+            background: white;
+            transition: all 0.3s;
+        }
+        
+        .input-area input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+        
+        .input-area input::placeholder {
+            color: var(--gray);
+        }
+        
+        /* Right Sidebar - Users */
+        .users-sidebar {
+            width: 280px;
+            background: var(--light);
+            border-left: 1px solid var(--gray-light);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .users-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .users-count {
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .user-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .user-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: white;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+        
+        .user-item:hover {
+            transform: translateX(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        
+        .user-item-main {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+        
+        .user-item-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .user-item-info {
+            flex: 1;
+        }
+        
+        .user-item-name {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 14px;
+        }
+        
+        .user-item-role {
+            font-size: 12px;
+            color: var(--gray);
+        }
+        
+        .kick-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all 0.3s;
+            opacity: 0;
+        }
+        
+        .user-item:hover .kick-btn {
+            opacity: 1;
+        }
+        
+        .kick-btn:hover {
+            background: #dc2626;
+            transform: scale(1.1);
+        }
+        
+        /* Typing Indicator */
+        .typing-indicator {
+            padding: 12px 20px;
+            color: var(--gray);
+            font-size: 14px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+        
+        .typing-dots span {
+            width: 6px;
+            height: 6px;
+            background: var(--gray);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+            30% {
+                transform: translateY(-4px);
+                opacity: 1;
+            }
+        }
+        
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            width: 90%;
+            max-width: 480px;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.2);
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        
+        .modal-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+        
+        .modal-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+        
+        .modal-subtitle {
+            color: var(--gray-dark);
+            font-size: 16px;
+        }
+        
+        .modal-body {
+            margin-bottom: 32px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 1001;
+            animation: slideInRight 0.3s ease-out;
+            border-left: 4px solid var(--success);
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .notification.hidden {
+            animation: slideOutRight 0.3s ease-out forwards;
+        }
+        
+        @keyframes slideOutRight {
+            to {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+        }
+        
+        .notification-icon {
+            font-size: 20px;
+            color: var(--success);
+        }
+        
+        .notification-message {
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        /* Welcome Message */
+        .welcome-message {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .welcome-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .welcome-text {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .container {
+                height: 100vh;
+                border-radius: 0;
+            }
+            
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .sidebar, .users-sidebar {
+                width: 100%;
+                height: 200px;
+            }
+            
+            .chat-area {
+                height: 60%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .login-screen {
+                padding: 30px;
+            }
+            
+            .login-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                padding: 0 20px;
+            }
+            
+            .chat-area {
+                padding: 20px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Login Screen -->
+        <div class="login-screen" id="loginScreen">
+            <div class="login-header">
+                <div class="logo">NEXUS CHAT</div>
+                <div class="tagline">Moderne Chat-Plattform mit Raum-Codes</div>
+                <div class="subtagline">Erstelle private Räume, teile Codes und chatte sicher mit Freunden</div>
+            </div>
+            
+            <div class="login-form">
+                <div class="input-group">
+                    <label class="input-label">Dein Benutzername</label>
+                    <input type="text" class="input-field" id="username" 
+                           placeholder="Gib deinen Chat-Namen ein" maxlength="20">
+                </div>
+                
+                <div class="login-options">
+                    <div class="option-card active" id="createOption">
+                        <div class="option-icon">✨</div>
+                        <div class="option-title">Raum erstellen</div>
+                        <div class="option-desc">Erstelle einen neuen privaten Chat-Raum mit eigenem Code. Teile den Code mit Freunden, damit sie beitreten können.</div>
+                    </div>
+                    
+                    <div class="option-card" id="joinOption">
+                        <div class="option-icon">🔗</div>
+                        <div class="option-title">Raum beitreten</div>
+                        <div class="option-desc">Tritt einem bestehenden Raum bei, indem du den Raum-Code eingibst. Du benötigst den Code vom Raum-Ersteller.</div>
+                    </div>
+                </div>
+                
+                <div id="createForm" style="display: block;">
+                    <div class="input-group">
+                        <label class="input-label">Raum-Name</label>
+                        <input type="text" class="input-field" id="newRoomName" 
+                               placeholder="z.B. Gaming Crew, Projekttreffen">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Raum-Code</label>
+                        <input type="text" class="input-field" id="newRoomCode" 
+                               placeholder="Wird automatisch generiert" maxlength="8">
+                        <small style="color: var(--gray); display: block; margin-top: 8px; font-size: 13px;">
+                            Du kannst den Code anpassen oder generieren lassen (4-8 Zeichen)
+                        </small>
+                    </div>
+                    <button class="btn btn-primary" onclick="createRoom()">
+                        <i class="fas fa-plus-circle"></i> Raum erstellen & beitreten
+                    </button>
+                </div>
+                
+                <div id="joinForm" style="display: none;">
+                    <div class="input-group">
+                        <label class="input-label">Raum-Code eingeben</label>
+                        <input type="text" class="input-field" id="joinRoomCode" 
+                               placeholder="z.B. GAMING123" maxlength="8">
+                        <small style="color: var(--gray); display: block; margin-top: 8px; font-size: 13px;">
+                            Frage den Raum-Ersteller nach dem Code zum Beitreten
+                        </small>
+                    </div>
+                    <button class="btn btn-primary" onclick="joinRoom()">
+                        <i class="fas fa-sign-in-alt"></i> Raum beitreten
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chat Interface -->
+        <div class="chat-interface" id="chatInterface">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <div class="current-room-info">
+                        <div class="room-name" id="currentRoomName">Wähle einen Raum</div>
+                        <div class="room-code-container">
+                            <div class="room-code" id="roomCodeDisplay">----</div>
+                            <button class="copy-btn" id="copyBtn" onclick="copyRoomCode()">
+                                <i class="far fa-copy"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="user-profile">
+                    <div class="user-avatar" id="userAvatar">U</div>
+                    <div class="user-info">
+                        <div class="user-name" id="displayUsername">Benutzer</div>
+                        <div class="user-status">
+                            <span class="status-dot"></span>
+                            <span id="userStatus">Online</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary btn-small" onclick="showLeaveModal()">
+                        <i class="fas fa-sign-out-alt"></i> Verlassen
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Left Sidebar -->
+                <div class="sidebar">
+                    <div class="sidebar-section">
+                        <div class="section-title">
+                            <span>Deine Räume</span>
+                            <span id="roomsCount">0 Räume</span>
+                        </div>
+                        <div class="room-list" id="roomList">
+                            <!-- Räume werden hier geladen -->
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="showCreateRoomModal()">
+                            <i class="fas fa-plus"></i> Neuen Raum erstellen
+                        </button>
+                        <button class="btn btn-secondary" onclick="showJoinRoomModal()">
+                            <i class="fas fa-link"></i> Raum beitreten
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Chat Area -->
+                <div class="chat-area">
+                    <div class="chat-empty" id="chatEmpty">
+                        <div class="chat-empty-icon">💬</div>
+                        <h2>Willkommen bei Nexus Chat!</h2>
+                        <p>Wähle einen Chat-Raum aus der Liste oder erstelle einen neuen Raum. Du kannst private Räume mit Codes erstellen, um mit Freunden zu chatten.</p>
+                        <div style="display: flex; gap: 12px; margin-top: 20px;">
+                            <button class="btn btn-primary" onclick="showCreateRoomModal()">
+                                <i class="fas fa-plus-circle"></i> Raum erstellen
+                            </button>
+                            <button class="btn btn-secondary" onclick="showJoinRoomModal()">
+                                <i class="fas fa-link"></i> Raum beitreten
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="welcome-message" id="welcomeMessage">
+                        <div class="welcome-title">Willkommen im Raum!</div>
+                        <div class="welcome-text">Du hast erfolgreich den Raum betreten. Teile den Raum-Code mit Freunden, damit sie beitreten können.</div>
+                    </div>
+                    
+                    <div class="messages-container" id="messagesContainer">
+                        <!-- Nachrichten werden hier angezeigt -->
+                    </div>
+                    
+                    <div class="typing-indicator" id="typingIndicator">
+                        <span id="typingUser">Jemand</span> schreibt
+                        <div class="typing-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="input-area" id="inputArea">
+                        <input type="text" id="messageInput" placeholder="Schreibe eine Nachricht und drücke Enter..." autocomplete="off">
+                    </div>
+                </div>
+                
+                <!-- Right Sidebar - Users -->
+                <div class="users-sidebar">
+                    <div class="users-header">
+                        <h3 class="section-title">Mitglieder</h3>
+                        <div class="users-count" id="usersCount">0</div>
+                    </div>
+                    <div class="user-list" id="userList">
+                        <!-- Benutzer werden hier geladen -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Create Room Modal -->
+    <div class="modal" id="createRoomModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-icon">✨</div>
+                <div class="modal-title">Neuen Raum erstellen</div>
+                <div class="modal-subtitle">Erstelle einen privaten Chat-Raum mit eigenem Code</div>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label class="input-label">Raum-Name</label>
+                    <input type="text" class="input-field" id="modalNewRoomName" 
+                           placeholder="z.B. Gaming Crew, Projekttreffen">
+                </div>
+                <div class="input-group">
+                    <label class="input-label">Raum-Code</label>
+                    <input type="text" class="input-field" id="modalNewRoomCode" 
+                           placeholder="Wird automatisch generiert" maxlength="8">
+                    <small style="color: var(--gray); display: block; margin-top: 8px; font-size: 13px;">
+                        Code muss 4-8 Zeichen lang sein (Buchstaben und Zahlen)
+                    </small>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="hideModal('createRoomModal')">Abbrechen</button>
+                <button class="btn btn-primary" onclick="createRoomFromModal()">
+                    <i class="fas fa-plus-circle"></i> Raum erstellen
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Join Room Modal -->
+    <div class="modal" id="joinRoomModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-icon">🔗</div>
+                <div class="modal-title">Raum beitreten</div>
+                <div class="modal-subtitle">Tritt einem bestehenden Raum mit Code bei</div>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label class="input-label">Raum-Code eingeben</label>
+                    <input type="text" class="input-field" id="modalJoinRoomCode" 
+                           placeholder="z.B. GAMING123" maxlength="8">
+                    <small style="color: var(--gray); display: block; margin-top: 8px; font-size: 13px;">
+                        Frage den Raum-Ersteller nach dem Code zum Beitreten
+                    </small>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="hideModal('joinRoomModal')">Abbrechen</button>
+                <button class="btn btn-primary" onclick="joinRoomFromModal()">
+                    <i class="fas fa-sign-in-alt"></i> Raum beitreten
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Leave Room Modal -->
+    <div class="modal" id="leaveRoomModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-icon">🚪</div>
+                <div class="modal-title">Raum verlassen</div>
+                <div class="modal-subtitle">Möchtest du den aktuellen Raum wirklich verlassen?</div>
+            </div>
+            <div class="modal-body">
+                <p style="color: var(--gray-dark); line-height: 1.6;">
+                    Du wirst aus dem Raum entfernt und kannst nur mit dem Raum-Code wieder beitreten.
+                    Als Raum-Ersteller: Wenn du den Raum verlässt, bleibt der Raum für andere Mitglieder erhalten.
+                </p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="hideModal('leaveRoomModal')">Abbrechen</button>
+                <button class="btn btn-danger" onclick="leaveCurrentRoom()">
+                    <i class="fas fa-sign-out-alt"></i> Ja, Raum verlassen
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Kick User Modal -->
+    <div class="modal" id="kickUserModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-icon">👢</div>
+                <div class="modal-title">Benutzer entfernen</div>
+                <div class="modal-subtitle" id="kickUserSubtitle">Möchtest du diesen Benutzer wirklich entfernen?</div>
+            </div>
+            <div class="modal-body">
+                <p style="color: var(--gray-dark); line-height: 1.6;">
+                    Der Benutzer wird aus dem Raum entfernt und kann nur mit dem Raum-Code wieder beitreten.
+                    Diese Aktion kann nicht rückgängig gemacht werden.
+                </p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="hideModal('kickUserModal')">Abbrechen</button>
+                <button class="btn btn-danger" onclick="confirmKickUser()">
+                    <i class="fas fa-user-slash"></i> Ja, entfernen
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <div class="notification-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="notification-message" id="notificationMessage">Erfolgreich kopiert!</div>
+    </div>
+
+    <script>
+        // Chat System Variablen
+        let currentUser = null;
+        let currentRoomCode = null;
+        let rooms = {};
+        let userToKick = null;
+        
+        // Beispiel-Räume (simuliert Datenbank)
+        const exampleRooms = {
+            'GAME123': {
+                name: '🎮 Gaming Zone',
+                code: 'GAME123',
+                creator: 'Alex',
+                users: ['Alex', 'Max', 'Sarah', 'Tom'],
+                messages: [
+                    { user: 'Alex', text: 'Wer zockt heute Abend?', time: '10:30' },
+                    { user: 'Max', text: 'Ich bin dabei! Welches Spiel?', time: '10:32' },
+                    { user: 'Sarah', text: 'CoD oder Fortnite?', time: '10:33' },
+                    { user: 'Alex', text: 'Lasst uns CoD spielen!', time: '10:35' }
+                ]
+            },
+            'TECH456': {
+                name: '💻 Tech Talk',
+                code: 'TECH456',
+                creator: 'Lisa',
+                users: ['Lisa', 'Tom', 'Anna', 'Ben'],
+                messages: [
+                    { user: 'Lisa', text: 'Hat jemand Erfahrung mit React?', time: '09:15' },
+                    { user: 'Tom', text: 'Ja, arbeite seit 2 Jahren damit', time: '09:20' },
+                    { user: 'Anna', text: 'Ich lerne gerade React!', time: '09:25' }
+                ]
+            }
+        };
+        
+        // Initialisiere Beispiel-Räume
+        Object.keys(exampleRooms).forEach(code => {
+            rooms[code] = exampleRooms[code];
+        });
+        
+        // DOM vollständig geladen
+        document.addEventListener('DOMContentLoaded', function() {
+            // Login Option Toggle
+            document.getElementById('createOption').addEventListener('click', function() {
+                document.getElementById('createOption').classList.add('active');
+                document.getElementById('joinOption').classList.remove('active');
+                document.getElementById('createForm').style.display = 'block';
+                document.getElementById('joinForm').style.display = 'none';
+                generateRoomCode();
+            });
+            
+            document.getElementById('joinOption').addEventListener('click', function() {
+                document.getElementById('joinOption').classList.add('active');
+                document.getElementById('createOption').classList.remove('active');
+                document.getElementById('createForm').style.display = 'none';
+                document.getElementById('joinForm').style.display = 'block';
+            });
+            
+            // Enter-Taste für Login
+            document.getElementById('username').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    if (document.getElementById('createForm').style.display === 'block') {
+                        createRoom();
+                    } else {
+                        joinRoom();
+                    }
+                }
+            });
+            
+            // Enter-Taste für Nachrichten
+            document.getElementById('messageInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            // Auto-generate room code on focus
+            document.getElementById('newRoomCode').addEventListener('focus', function() {
+                if (!this.value) {
+                    generateRoomCode();
+                }
+            });
+            
+            document.getElementById('modalNewRoomCode').addEventListener('focus', function() {
+                if (!this.value) {
+                    generateModalRoomCode();
+                }
+            });
+            
+            // Initialisiere
+            generateRoomCode();
+            hideNotification();
+        });
+        
+        // Raum-Code generieren
+        function generateRoomCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 6; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('newRoomCode').value = code;
+        }
+        
+        function generateModalRoomCode() {
+            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
+            let code = '';
+            for (let i = 0; i < 6; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            document.getElementById('modalNewRoomCode').value = code;
+        }
+        
+        // Raum erstellen (von Login)
+        function createRoom() {
+            const username = document.getElementById('username').value.trim();
+            const roomName = document.getElementById('newRoomName').value.trim();
+            const roomCode = document.getElementById('newRoomCode').value.trim().toUpperCase();
+            
+            if (!validateUserInput(username, roomName, roomCode)) return;
+            
+            // Benutzer erstellen
+            currentUser = {
+                name: username,
+                avatar: username.charAt(0).toUpperCase()
+            };
+            
+            // Raum erstellen
+            createNewRoom(roomName, roomCode, username);
+        }
+        
+        // Raum erstellen (von Modal)
+        function createRoomFromModal() {
+            const roomName = document.getElementById('modalNewRoomName').value.trim();
+            const roomCode = document.getElementById('modalNewRoomCode').value.trim().toUpperCase();
+            
+            if (!currentUser) {
+                showNotification('Bitte zuerst einloggen!', 'error');
+                return;
+            }
+            
+            if (!roomName) {
+                showNotification('Bitte gib einen Raumnamen ein!', 'error');
+                return;
+            }
+            
+            if (roomCode.length < 4 || roomCode.length > 8) {
+                showNotification('Raum-Code muss 4-8 Zeichen lang sein!', 'error');
+                return;
+            }
+            
+            if (rooms[roomCode]) {
+                showNotification('Dieser Raum-Code ist bereits vergeben!', 'error');
+                return;
+            }
+            
+            createNewRoom(roomName, roomCode, currentUser.name);
+            hideModal('createRoomModal');
+        }
+        
+        // Neuen Raum erstellen
+        function createNewRoom(roomName, roomCode, creator) {
+            const newRoom = {
+                name: roomName,
+                code: roomCode,
+                creator: creator,
+                users: [creator],
+                messages: [
+                    { user: 'System', text: `Willkommen im Raum "${roomName}"!`, time: getCurrentTime() },
+                    { user: 'System', text: `Erstellt von ${creator}. Teile den Code "${roomCode}" mit Freunden.`, time: getCurrentTime() }
+                ]
+            };
+            
+            // Raum speichern
+            rooms[roomCode] = newRoom;
+            
+            // Zum neuen Raum wechseln
+            joinRoomByCode(roomCode);
+            
+            showNotification(`Raum "${roomName}" erfolgreich erstellt!`, 'success');
+        }
+        
+        // Raum beitreten (von Login)
+        function joinRoom() {
+            const username = document.getElementById('username').value.trim();
+            const roomCode = document.getElementById('joinRoomCode').value.trim().toUpperCase();
+            
+            if (!username) {
+                showNotification('Bitte gib einen Benutzernamen ein!', 'error');
+                return;
+            }
+            
+            if (username.length < 3) {
+                showNotification('Benutzername muss mindestens 3 Zeichen haben!', 'error');
+                return;
+            }
+            
+            if (!roomCode) {
+                showNotification('Bitte gib einen Raum-Code ein!', 'error');
+                return;
+            }
+            
+            // Benutzer erstellen
+            currentUser = {
+                name: username,
+                avatar: username.charAt(0).toUpperCase()
+            };
+            
+            joinRoomByCode(roomCode);
+        }
+        
+        // Raum beitreten (von Modal)
+        function joinRoomFromModal() {
+            const roomCode = document.getElementById('modalJoinRoomCode').value.trim().toUpperCase();
+            
+            if (!currentUser) {
+                showNotification('Bitte zuerst einloggen!', 'error');
+                return;
+            }
+            
+            if (!roomCode) {
+                showNotification('Bitte gib einen Raum-Code ein!', 'error');
+                return;
+            }
+            
+            joinRoomByCode(roomCode);
+            hideModal('joinRoomModal');
+        }
+        
+        // Raum per Code beitreten
+        function joinRoomByCode(roomCode) {
+            const room = rooms[roomCode];
+            
+            if (!room) {
+                showNotification('Raum nicht gefunden! Überprüfe den Code.', 'error');
+                return;
+            }
+            
+            // Wenn Benutzer nicht im Raum ist, hinzufügen
+            if (!room.users.includes(currentUser.name)) {
+                room.users.push(currentUser.name);
+                
+                // Willkommensnachricht hinzufügen
+                room.messages.push({
+                    user: 'System',
+                    text: `${currentUser.name} ist dem Raum beigetreten!`,
+                    time: getCurrentTime()
+                });
+            }
+            
+            // Aktuellen Raum setzen
+            currentRoomCode = roomCode;
+            
+            // UI aktualisieren
+            updateUIAfterLogin();
+            updateRoomUI();
+            updateRoomList();
+            
+            // Willkommensnachricht anzeigen
+            showWelcomeMessage();
+            
+            showNotification(`Erfolgreich Raum "${room.name}" beigetreten!`, 'success');
+        }
+        
+        // UI nach Login aktualisieren
+        function updateUIAfterLogin() {
+            // Login-Screen ausblenden
+            document.getElementById('loginScreen').style.display = 'none';
+            
+            // Chat-Interface anzeigen
+            document.getElementById('chatInterface').style.display = 'flex';
+            
+            // Benutzerinfo aktualisieren
+            document.getElementById('displayUsername').textContent = currentUser.name;
+            document.getElementById('userAvatar').textContent = currentUser.avatar;
+        }
+        
+        // Raum-UI aktualisieren
+        function updateRoomUI() {
+            const room = rooms[currentRoomCode];
+            if (!room) return;
+            
+            // Header aktualisieren
+            document.getElementById('currentRoomName').textContent = room.name;
+            document.getElementById('roomCodeDisplay').textContent = room.code;
+            
+            // Kopier-Button zurücksetzen
+            document.getElementById('copyBtn').classList.remove('copied');
+            document.getElementById('copyBtn').innerHTML = '<i class="far fa-copy"></i>';
+            
+            // Chat-Bereich anzeigen
+            document.getElementById('chatEmpty').style.display = 'none';
+            document.getElementById('messagesContainer').style.display = 'block';
+            document.getElementById('inputArea').style.display = 'block';
+            
+            // Nachrichten laden
+            loadRoomMessages();
+            
+            // Benutzerliste aktualisieren
+            updateUserList();
+            
+            // Online-Counter aktualisieren
+            document.getElementById('usersCount').textContent = room.users.length;
+        }
+        
+        // Raumliste aktualisieren
+        function updateRoomList() {
+            const roomList = document.getElementById('roomList');
+            roomList.innerHTML = '';
+            
+            let userRoomsCount = 0;
+            
+            // Aktuelle Räume des Benutzers anzeigen
+            Object.keys(rooms).forEach(code => {
+                const room = rooms[code];
+                if (room.users.includes(currentUser.name)) {
+                    userRoomsCount++;
+                    
+                    const roomItem = document.createElement('div');
+                    roomItem.className = `room-item ${currentRoomCode === code ? 'active' : ''}`;
+                    roomItem.innerHTML = `
+                        <div class="room-icon">${room.name.charAt(0)}</div>
+                        <div class="room-details">
+                            <h4>${room.name}</h4>
+                            <div class="room-meta">
+                                <span>👤 ${room.users.length}</span>
+                                <span>${room.code}</span>
+                            </div>
+                        </div>
+                    `;
+                    roomItem.onclick = () => {
+                        currentRoomCode = code;
+                        updateRoomUI();
+                        updateRoomList();
+                    };
+                    roomList.appendChild(roomItem);
+                }
+            });
+            
+            // Raum-Counter aktualisieren
+            document.getElementById('roomsCount').textContent = `${userRoomsCount} Räume`;
+        }
+        
+        // Benutzerliste aktualisieren
+        function updateUserList() {
+            const userList = document.getElementById('userList');
+            userList.innerHTML = '';
+            
+            const room = rooms[currentRoomCode];
+            if (!room) return;
+            
+            room.users.forEach(user => {
+                const isCreator = user === room.creator;
+                const isCurrentUser = user === currentUser.name;
+                
+                const userItem = document.createElement('div');
+                userItem.className = 'user-item';
+                userItem.innerHTML = `
+                    <div class="user-item-main">
+                        <div class="user-item-avatar">${user.charAt(0)}</div>
+                        <div class="user-item-info">
+                            <div class="user-item-name">${user} ${isCurrentUser ? '(Du)' : ''}</div>
+                            <div class="user-item-role">${isCreator ? '👑 Ersteller' : '👤 Mitglied'}</div>
+                        </div>
+                    </div>
+                    ${!isCurrentUser && currentUser.name === room.creator ? 
+                        `<button class="kick-btn" onclick="showKickModal('${user}')">
+                            <i class="fas fa-user-slash"></i>
+                        </button>` : ''
+                    }
+                `;
+                userList.appendChild(userItem);
+            });
+        }
+        
+        // Nachrichten laden
+        function loadRoomMessages() {
+            const messagesContainer = document.getElementById('messagesContainer');
+            messagesContainer.innerHTML = '';
+            
+            const room = rooms[currentRoomCode];
+            if (!room) return;
+            
+            // Bestehende Nachrichten anzeigen
+            room.messages.forEach(msg => {
+                addMessageToUI(msg.user, msg.text, msg.time);
+            });
+            
+            // Nach unten scrollen
+            setTimeout(() => {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 100);
+        }
+        
+        // Nachricht zur UI hinzufügen
+        function addMessageToUI(user, text, time = null) {
+            const messagesContainer = document.getElementById('messagesContainer');
+            const isOwn = user === currentUser.name;
+            const isSystem = user === 'System';
+            
+            if (!time) {
+                time = getCurrentTime();
+            }
+            
+            const messageDiv = document.createElement('div');
+            
+            if (isSystem) {
+                messageDiv.className = 'message';
+                messageDiv.innerHTML = `
+                    <div class="message-content" style="background: var(--gray-light); color: var(--gray-dark); text-align: center; font-size: 14px;">
+                        ${text}
+                        <div style="font-size: 11px; margin-top: 4px; opacity: 0.7;">${time}</div>
+                    </div>
+                `;
+            } else {
+                messageDiv.className = `message ${isOwn ? 'own' : ''}`;
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <div class="message-avatar">${user.charAt(0)}</div>
+                        <div class="message-user">${isOwn ? 'Du' : user}</div>
+                        <div class="message-time">${time}</div>
+                    </div>
+                    <div class="message-content">${text}</div>
+                `;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            
+            // Nach unten scrollen
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        // Nachricht senden
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const text = input.value.trim();
+            
+            if (!text || !currentRoomCode || !currentUser) return;
+            
+            const room = rooms[currentRoomCode];
+            
+            // Nachricht speichern
+            const message = {
+                user: currentUser.name,
+                text: text,
+                time: getCurrentTime()
+            };
+            
+            room.messages.push(message);
+            
+            // Nachricht in UI anzeigen
+            addMessageToUI(currentUser.name, text, message.time);
+            
+            // Eingabe leeren
+            input.value = '';
+            
+            // Simuliere Antworten von anderen Benutzern
+            simulateResponses(text);
+        }
+        
+        // Simuliere Antworten
+        function simulateResponses(userMessage) {
+            const room = rooms[currentRoomCode];
+            if (!room || room.users.length <= 1) return;
+            
+            // Finde andere Benutzer im Raum
+            const otherUsers = room.users.filter(user => user !== currentUser.name && user !== 'System');
+            if (otherUsers.length === 0) return;
+            
+            const randomUser = otherUsers[Math.floor(Math.random() * otherUsers.length)];
+            
+            // Nur in 50% der Fälle antworten
+            if (Math.random() > 0.5) return;
+            
+            // Warte eine zufällige Zeit
+            const delay = 1000 + Math.random() * 3000;
+            
+            // Zeige Typing Indicator
+            setTimeout(() => {
+                showTypingIndicator(randomUser);
+                
+                // Warte bevor Antwort kommt
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    
+                    // Generiere Antwort
+                    const response = generateResponse(userMessage.toLowerCase());
+                    
+                    // Antwort speichern und anzeigen
+                    const message = {
+                        user: randomUser,
+                        text: response,
+                        time: getCurrentTime()
+                    };
+                    
+                    room.messages.push(message);
+                    addMessageToUI(randomUser, response, message.time);
+                }, 1500 + Math.random() * 2000);
+            }, delay);
+        }
+        
+        // Generiere Antwort
+        function generateResponse(message) {
+            const responses = {
+                'hallo': ['Hey! 👋', 'Hallo! Wie geht\'s?', 'Hi! Schön dich zu sehen!', 'Moin!'],
+                'wie geht': ['Alles gut bei mir!', 'Super, danke! Und dir?', 'Kann nicht klagen!', 'Ganz entspannt.'],
+                'was machst': ['Chille gerade 😎', 'Bin am Chatten!', 'Überlege was ich tun soll.', 'Genieße den Tag.'],
+                'spiel': ['Coole Idee!', 'Welches Spiel?', 'Bin dabei! 🎮', 'Habe heute keine Zeit.'],
+                'lust': ['Klar, worauf hast du Lust?', 'Ja, gerne!', 'Kommt drauf an...', 'Vielleicht später?'],
+                'default': ['Interessant!', 'Erzähl mehr!', 'Das klingt gut!', 'Verstehe ich.', 'Cool!']
+            };
+            
+            // Finde passende Antwort
+            for (const [keyword, possibleResponses] of Object.entries(responses)) {
+                if (message.includes(keyword)) {
+                    return possibleResponses[Math.floor(Math.random() * possibleResponses.length)];
+                }
+            }
+            
+            // Standardantwort
+            return responses.default[Math.floor(Math.random() * responses.default.length)];
+        }
+        
+        // Typing Indicator anzeigen
+        function showTypingIndicator(user) {
+            document.getElementById('typingUser').textContent = user;
+            document.getElementById('typingIndicator').style.display = 'flex';
+        }
+        
+        // Typing Indicator ausblenden
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').style.display = 'none';
+        }
+        
+        // Raum-Code kopieren
+        function copyRoomCode() {
+            if (!currentRoomCode) {
+                showNotification('Wähle zuerst einen Raum aus!', 'error');
+                return;
+            }
+            
+            navigator.clipboard.writeText(currentRoomCode)
+                .then(() => {
+                    const copyBtn = document.getElementById('copyBtn');
+                    copyBtn.classList.add('copied');
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i>';
+                    showNotification('Raum-Code kopiert! Teile ihn mit Freunden.', 'success');
+                    
+                    // Nach 2 Sekunden zurücksetzen
+                    setTimeout(() => {
+                        copyBtn.classList.remove('copied');
+                        copyBtn.innerHTML = '<i class="far fa-copy"></i>';
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Fehler beim Kopieren: ', err);
+                    showNotification('Fehler beim Kopieren!', 'error');
+                });
+        }
+        
+        // Benutzer entfernen (Kick)
+        function showKickModal(userName) {
+            userToKick = userName;
+            document.getElementById('kickUserSubtitle').textContent = `Möchtest du "${userName}" wirklich entfernen?`;
+            showModal('kickUserModal');
+        }
+        
+        function confirmKickUser() {
+            if (!userToKick || !currentRoomCode || !currentUser) return;
+            
+            const room = rooms[currentRoomCode];
+            
+            // Prüfe ob aktueller Benutzer Ersteller ist
+            if (room.creator !== currentUser.name) {
+                showNotification('Nur der Raum-Ersteller kann Benutzer entfernen!', 'error');
+                return;
+            }
+            
+            // Benutzer aus Raum entfernen
+            const userIndex = room.users.indexOf(userToKick);
+            if (userIndex > -1) {
+                room.users.splice(userIndex, 1);
+                
+                // Systemnachricht hinzufügen
+                room.messages.push({
+                    user: 'System',
+                    text: `${userToKick} wurde aus dem Raum entfernt.`,
+                    time: getCurrentTime()
+                });
+                
+                // UI aktualisieren
+                updateUserList();
+                loadRoomMessages();
+                
+                showNotification(`${userToKick} wurde aus dem Raum entfernt.`, 'success');
+            }
+            
+            hideModal('kickUserModal');
+            userToKick = null;
+        }
+        
+        // Raum verlassen
+        function showLeaveModal() {
+            if (!currentRoomCode) {
+                showNotification('Du bist in keinem Raum!', 'error');
+                return;
+            }
+            
+            showModal('leaveRoomModal');
+        }
+        
+        function leaveCurrentRoom() {
+            if (!currentRoomCode || !currentUser) return;
+            
+            const room = rooms[currentRoomCode];
+            
+            // Benutzer aus Raum entfernen
+            const userIndex = room.users.indexOf(currentUser.name);
+            if (userIndex > -1) {
+                room.users.splice(userIndex, 1);
+                
+                // Systemnachricht hinzufügen
+                room.messages.push({
+                    user: 'System',
+                    text: `${currentUser.name} hat den Raum verlassen.`,
+                    time: getCurrentTime()
+                });
+            }
+            
+            // Raum verlassen
+            const leftRoomCode = currentRoomCode;
+            currentRoomCode = null;
+            
+            // UI zurücksetzen
+            document.getElementById('currentRoomName').textContent = 'Wähle einen Raum';
+            document.getElementById('roomCodeDisplay').textContent = '----';
+            document.getElementById('chatEmpty').style.display = 'flex';
+            document.getElementById('messagesContainer').style.display = 'none';
+            document.getElementById('inputArea').style.display = 'none';
+            document.getElementById('welcomeMessage').style.display = 'none';
+            
+            // Raumliste aktualisieren
+            updateRoomList();
+            
+            // Kopier-Button zurücksetzen
+            document.getElementById('copyBtn').classList.remove('copied');
+            document.getElementById('copyBtn').innerHTML = '<i class="far fa-copy"></i>';
+            
+            hideModal('leaveRoomModal');
+            showNotification(`Du hast den Raum "${room.name}" verlassen.`, 'success');
+        }
+        
+        // Modals anzeigen/verstecken
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+        
+        function hideModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        function showCreateRoomModal() {
+            document.getElementById('modalNewRoomName').value = '';
+            generateModalRoomCode();
+            showModal('createRoomModal');
+        }
+        
+        function showJoinRoomModal() {
+            document.getElementById('modalJoinRoomCode').value = '';
+            showModal('joinRoomModal');
+        }
+        
+        // Willkommensnachricht anzeigen
+        function showWelcomeMessage() {
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            welcomeMessage.style.display = 'block';
+            
+            // Nach 5 Sekunden ausblenden
+            setTimeout(() => {
+                welcomeMessage.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Benachrichtigung anzeigen
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationMessage = document.getElementById('notificationMessage');
+            
+            // Typ-basierte Anpassungen
+            if (type === 'error') {
+                notification.style.borderLeftColor = 'var(--danger)';
+                notification.querySelector('.notification-icon').innerHTML = '<i class="fas fa-exclamation-circle"></i>';
+                notification.querySelector('.notification-icon').style.color = 'var(--danger)';
+            } else if (type === 'success') {
+                notification.style.borderLeftColor = 'var(--success)';
+                notification.querySelector('.notification-icon').innerHTML = '<i class="fas fa-check-circle"></i>';
+                notification.querySelector('.notification-icon').style.color = 'var(--success)';
+            }
+            
+            notificationMessage.textContent = message;
+            notification.classList.remove('hidden');
+            
+            // Nach 3 Sekunden ausblenden
+            setTimeout(hideNotification, 3000);
+        }
+        
+        function hideNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.add('hidden');
+        }
+        
+        // Hilfsfunktionen
+        function getCurrentTime() {
+            const now = new Date();
+            return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+        }
+        
+        function validateUserInput(username, roomName, roomCode) {
+            if (!username) {
+                showNotification('Bitte gib einen Benutzernamen ein!', 'error');
+                return false;
+            }
+            
+            if (username.length < 3) {
+                showNotification('Benutzername muss mindestens 3 Zeichen haben!', 'error');
+                return false;
+            }
+            
+            if (!roomName) {
+                showNotification('Bitte gib einen Raumnamen ein!', 'error');
+                return false;
+            }
+            
+            if (roomCode.length < 4 || roomCode.length > 8) {
+                showNotification('Raum-Code muss 4-8 Zeichen lang sein!', 'error');
+                return false;
+            }
+            
+            if (rooms[roomCode]) {
+                showNotification('Dieser Raum-Code ist bereits vergeben!', 'error');
+                return false;
+            }
+            
+            return true;
+        }
+    </script>
+</body>
+</html>
